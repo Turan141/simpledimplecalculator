@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .calc {
+            background-color: #353f49;
+            color: #d87647;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+        #first, #second, #select, #btn {
+            height: 30px;
+            font-size: 20px;
+            border: 5px solid #d87647;
+            box-shadow: 0px 0px 30px #d87647;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+
+        }
+        #select, #btn{
+            width: 80px;
+            height: 42px;
+            margin-left: 10px;
+            margin-right: 10px;
+            transform: 1s;
+            text-align: center;
+        }
+        .answer{
+            border: 5px solid #d87647;
+            width: 100px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0px 0px 30px #d87647;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="calc">
+        <input id="first" type="text" name="firstnum" value="0" onkeypress="return onlyNumberKey(event)" oninput="turnOff()">
+        <select id="select" name="math" onchange="change()">
+            <option id="option" value="minus">-</option>
+            <option id="option" value="plus">+</option>
+            <option id="option" value="deleniye">/</option>
+            <option id="option" value="umnojeniye">*</option>
+        </select>
+        <input id="second" type="text" name="secondnum" value="0" oninput="turnOff()" onkeypress="return onlyNumberKey(event)">
+        <button id="btn">=</button>
+        <div class="answer" id="value">
+            <p class="answer-text">VALUE</p>
+        </div>
+    </div>
+    <script>
+    'use strict'
+    let firstNum = document.getElementById("first");
+    let secondNum = document.getElementById("second");
+    let btn = document.getElementById("btn");
+    let option = document.getElementById("select")
+    let sum = 1;
+    let symbol = "minus"
+    let value = document.getElementById("value")
+
+    btn.disabled = false
+
+    let one = firstNum.value;
+    let two = secondNum.value;
+
+    function onlyNumberKey(evt) {
+
+        // Only ASCII character in that range allowed
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+            return false;
+        return true;
+    }
+
+    let turnOff = function() {
+        btn.disabled = false
+        return
+    }
+
+    let change = function() {
+        symbol = select.value
+        btn.disabled = false
+        return symbol
+    }
+
+
+
+    let deletelet = function() {
+        one = one.replace(/[^0-9,.]/g, ' ');
+        return one
+    }
+
+    let calc = function() {
+        if (symbol == "minus") {
+            sum = Number(firstNum.value) - Number(secondNum.value)
+        } else if (symbol == "plus") {
+            sum = Number(firstNum.value) + Number(secondNum.value)
+        } else if (symbol == "deleniye") {
+            sum = Number(firstNum.value) / Number(secondNum.value)
+        } else if (symbol == "umnojeniye") {
+            sum = Number(firstNum.value) * Number(secondNum.value)
+        }
+        value.innerHTML = sum
+        btn.disabled = true;
+        return sum
+    }
+
+    btn.addEventListener('click', calc)
+    </script>
+</body>
+
+</html>
